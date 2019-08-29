@@ -25,7 +25,7 @@ void search_pattern(string str,string patt,vector <int> lsp) {
 		if(patt[j]==str[i])
 			i++,j++;
 		if(j==M) {
-			cout<<"patter found at : "<<i-M<<endl;
+			cout<<"pattern found at : "<<i-M<<endl;
 			j=lsp[j-1];
 		}
 		else if(i<N&&patt[j]!=str[i]) {
