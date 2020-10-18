@@ -40,7 +40,7 @@ class manacher {
       }
       start = (index - table[index]) / 2;
       end = start + table[index] - 1;
-    };
+    }
     
     string longest_palindrome() {
       return s.substr(start, end - start + 1);
@@ -48,8 +48,8 @@ class manacher {
     
     pair <int, int> getindex() {
       return {start, end};
-    };
-    
+    }
+  
     vector <int> gettable() {
       return table;
     }
