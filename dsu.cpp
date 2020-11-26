@@ -39,7 +39,7 @@ class dsu {
         return ;
       u = get_root(u);
       v = get_root(v);
-      if (sz[v] > sz[v])
+      if (sz[v] > sz[u])
         swap(u, v);
       root[v] = u;
       sz[u] += sz[v];
