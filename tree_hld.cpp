@@ -69,7 +69,7 @@ class tree_hld {
     void hld(int u, int r) {
       int ui = -1, max_sz = 0;
       root[u] = r;
-      pos[u] = time_stamp++;
+      pos[u] = ++time_stamp;
       for (int v : node[u])
         if (v != pi[u][0])
           if (sz[v] > max_sz) {
