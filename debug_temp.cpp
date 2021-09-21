@@ -95,10 +95,10 @@ void debug_out(Head H, Tail... T) {
   debug_out(T...);
 }
  
-#ifdef LOCAL
-#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-#else
+#ifdef ONLINE_JUDGE
 #define debug(...) 42
+#else
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 #endif
 
 void solve() {

@@ -17,8 +17,8 @@ class seg_tree {
   vector <int> tree, lazy;
   public :
     seg_tree(int _n) : n(_n) {
-      tree.resize(4 * n + 11, 0);
-      lazy.resize(4 * n + 11, 0);
+      tree.resize(n * 4 + 11, 0);
+      lazy.resize(n * 4 + 11, 0);
     }
     
     void upd(int n, int s, int e, int i, int x) {
@@ -51,11 +51,8 @@ class seg_tree {
     }
     
     int get_sum(int l, int r) {
-      if (l > r) {
-        return 0;
-      } else {
-        return get_sum(1, 1, n, l, r);
-      }
+      assert(l <= r && l >= 1 && r <= n);
+      return get_sum(1, 1, n, l, r);
     }
     
     void shift(int n, int s, int e) {
@@ -84,6 +81,7 @@ class seg_tree {
     }
     
     void lazy_upd(int l, int r, int x) {
+      assert(l <= r && l >= 1 && r <= n);
       lazy_upd(1, 1, n, l, r, x);
     }
 };

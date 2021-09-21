@@ -47,9 +47,8 @@ class matching {
     }
     
     void find_match() {
-      bool ok = true;
-      while (ok) {
-        ok = false;
+      int ok = 1;
+      while (ok--) {
         for (int i = 0; i < n; i++)
           vis[i] = 0;
         for (int i = 0; i < n; i++)

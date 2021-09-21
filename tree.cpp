@@ -96,7 +96,6 @@ class tree {
       get_diameter(0, d);
       return d;
     }
-    
 };
 
 void solve() {

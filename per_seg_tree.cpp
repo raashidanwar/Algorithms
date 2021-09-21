@@ -24,58 +24,56 @@ class per_seg_tree {
   public :
     per_seg_tree(int _n) : n(_n) {}
     
-    struct node* build(int s, int e, vector <int> &a) {
+    struct node* make_node(int x = 0, struct node* li = NULL, struct node* ri = NULL) {
+      struct node* new_node = new node(x);
+      new_node->left = li;
+      new_node->right = ri;
+      if (li != NULL)
+        new_node->x += li->x;
+      if (ri != NULL)
+        new_node->x += ri->x;
+      return new_node;
+    }
+    
+    struct node* build(int s, int e) {
       if (s == e) {
-        struct node* new_node = new node(a[s - 1]);
-        return new_node;
+        return make_node(0);
       } else {
         int m = (s + e) >> 1;
-        struct node* new_node = new node(1);
-        new_node->left = build(s, m, a);
-        new_node->right = build(m + 1, e, a);
-        new_node->x = (new_node->left->x * new_node->right->x) % M2;
-        return new_node;
+        return make_node(0, build(s, m), build(m + 1, e));
       }
     }
     
     struct node* upd(struct node* ni, int s, int e, int i, int x) {
       if (s == e) {
-        struct node* new_node = new node(x);
-        return new_node;
+        return make_node(x);
       } else {
         int m = (s + e) >> 1;
-        struct node* new_node = new node(1);
+        struct node* new_node = new node(0);
         if (i <= m) {
-          new_node->left = upd(ni->left, s, m, i, x);
-          new_node->right = ni->right;
+          return make_node(0, upd(ni->left, s, m, i, x), ni->right);
         } else {
-          new_node->right = upd(ni->right, m + 1, e, i, x);
-          new_node->left = ni->left;
+          return make_node(0, ni->left, upd(ni->right, m + 1, e, i, x));
         }
-        new_node->x = (new_node->left->x * new_node->right->x) % M2;
-        return new_node;
       }
     }
     
     struct node* upd(struct node* ni, int i, int x) {
-      return upd(ni, 1, n, i, x);
+      return upd(ni, 0, n - 1, i, x);
     }
     
     int get(struct node* ni, int s, int e, int l, int r) {
       if (s > e || s > r || e < l)
-        return 1;
+        return 0;
       if (l <= s && e <= r)
         return ni->x;
       int m = (s + e) >> 1;
-      return (get(ni->left, s, m, l, r) * get(ni->right, m + 1, e, l, r)) % M2;
+      return get(ni->left, s, m, l, r) + get(ni->right, m + 1, e, l, r);
     }
     
     int get(struct node* ni, int l, int r) {
-      if (l > r) {
-        return 1;
-      } else {
-        return get(ni, 1, n, l, r);
-      }
+      assert(l >= 0 && r < n && l <= r);
+      return get(ni, 0, n - 1, l, r);
     }
 };
 

@@ -69,6 +69,17 @@ class btrie {
       return ans;
     }
     
+    int get_count(int x) {
+      int u = 0;
+      for (int i = 30; ~i; --i) {
+        int bit = (x >> i) & 1;
+        u = trie[u][bit];
+        if (!cnt[u])
+          return 0;
+      }
+      return cnt[u];
+    }
+    
     int get_min_count(int x) {
       int u = 0;
       for (int i = 30; ~i; --i) {

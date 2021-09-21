@@ -11,14 +11,15 @@ const int M1 =  998244353;
 const int M2 =  1000000007;
 mt19937 rng((uint64_t)chrono::steady_clock::now().time_since_epoch().count());
 
-class dsu {
+class dsu_rollback {
   int n;
-  vector <int> root, sz;
+  vector <int> root, rnk;
+  stack <tuple <int, int, int, int>> ops;
   int comp;
   public :
-    dsu(int _n) : n(_n) {
+    dsu_rollback(int _n) : n(_n) {
       root.resize(n);
-      sz.resize(n, 1);
+      rnk.resize(n);
       iota(root.begin(), root.end(), (int)0);
       comp = n;
     }
@@ -39,10 +40,23 @@ class dsu {
       u = get_root(u);
       v = get_root(v);
       comp--;
-      if (sz[v] > sz[u])
+      ops.push({u, rnk[u], v, rnk[v]});
+      if (rnk[v] > rnk[u])
         swap(u, v);
       root[v] = u;
-      sz[u] += sz[v];
+      rnk[u] += (rnk[u] == rnk[v]);
+    }
+    
+    void rollback() {
+      if (!ops.empty()) {
+        int u, rnk_u, v, rnk_v;
+        tie(u, rnk_u, v, rnk_v) = ops.top();
+        ops.pop();
+        rnk[u] = rnk_u;
+        root[u] = u;
+        rnk[v] = rnk_v;
+        root[v] = v;
+      }
     }
     
     int components() {

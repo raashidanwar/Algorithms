@@ -14,14 +14,13 @@ mt19937 rng((uint64_t)chrono::steady_clock::now().time_since_epoch().count());
 class dsu {
   int n;
   vector <int> root, sz;
+  int comp;
   public :
     dsu(int _n) : n(_n) {
       root.resize(n);
-      sz.resize(n);
-      for (int i = 0; i < n; i++) {
-        root[i] = i;
-        sz[i] = 1;
-      }
+      sz.resize(n, 1);
+      iota(root.begin(), root.end(), (int)0);
+      comp = n;
     }
     
     int get_root(int u) {
@@ -39,41 +38,21 @@ class dsu {
         return ;
       u = get_root(u);
       v = get_root(v);
-      if (sz[v] > sz[v])
+      comp--;
+      if (sz[v] > sz[u])
         swap(u, v);
       root[v] = u;
       sz[u] += sz[v];
     }
     
-    int total_comp() {
-      vector <int> mark(n, 0);
-      int tot_component = 0;
-      for (int i = 0; i < n; i++) {
-        int u = get_root(i);
-        if (!mark[u])
-          tot_component++;
-        mark[u] = 1;
-      }
-      return tot_component;
+    int components() {
+      return comp;
     }
-    
-    int comp_size(int u) {
-      u = get_root(u);
-      return sz[u];
-    }
-    
-    int max_size_comp() {
-      int max_sz = 0;
-      for (int i = 0; i < n; i++)
-        max_sz = max(max_sz, sz[get_root(i)]);
-      return max_sz;
-    }
-
 };
 
 
 /*
-   you need to add dsu also
+   you need to include dsu also
 */
 
 class graph_mst {
@@ -98,7 +77,7 @@ class graph_mst {
         return costx > costy;
       });
       
-      //used dsu class
+      //using dsu class
       dsu d(n);
       
       int tot_cost = 0;
@@ -114,7 +93,7 @@ class graph_mst {
     int min_st() {
       sort(edges.begin(), edges.end());
       
-      //used dsu class
+      //using dsu class
       dsu d(n);
       
       int tot_cost = 0;
