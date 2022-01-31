@@ -29,13 +29,15 @@ class string_kmp {
     }
     
     bool is_found(const string& s) {
-      for (int i = 0, j = 0; i < (int)s.size(); i++) {
-        if(s[i] == p[j]) {
-          if (++j == n)
-            return true;
-        }
+      int m = s.size() - 1;
+      for (int i = 0, j = 0; i < m; i++) {
         while (j && s[i] != p[j]) {
           j = lsp[j - 1];
+        }
+        if(s[i] == p[j]) {
+          if (++j == n) {
+            return true;
+          }
         }
       }
       return false;
