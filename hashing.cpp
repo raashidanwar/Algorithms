@@ -28,7 +28,7 @@ class string_hash {
       }
       
       for (int i = 1; i <= n; i++) {
-        Hash[i] = (Hash[i - 1] + (np[i - 1] * (s[i - 1] - 'a')) % M) % M;
+        Hash[i] = (Hash[i - 1] + (np[i - 1] * (s[i - 1] - 'a' + 1)) % M) % M;
       }
     }
     
