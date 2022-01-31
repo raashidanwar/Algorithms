@@ -34,7 +34,7 @@ class string_kmp {
           if (++j == n)
             return true;
         }
-        while (j && (j == n || s[i] != p[j])) {
+        while (j && s[i] != p[j]) {
           j = lsp[j - 1];
         }
       }
