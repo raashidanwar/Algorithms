@@ -18,7 +18,7 @@ class string_kmp {
   public :
     string_kmp(int _n, const string& p): n(_n), p(p) {
       lsp.resize(n, 0);
-      for (int i = 1, l = 1; i < n; i++) {
+      for (int i = 1, l = 0; i < n; i++) {
         while (l && p[i] != p[l]) {
           l = lsp[l - 1];
         }
