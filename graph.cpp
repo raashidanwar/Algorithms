@@ -50,6 +50,7 @@ class graph {
     bool check_cycle(int u, int p) {
       if (vis[u])
         return true;
+      vis[u] = true;
       for (int v : node[u])
         if (v != p)
           if (check_cycle(v, u))
